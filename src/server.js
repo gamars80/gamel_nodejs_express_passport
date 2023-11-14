@@ -4,7 +4,28 @@ const app = express();
 const path = require('path');
 const User = require('./models/users.model');
 const passport = require('passport');
+const cookieSession = require('cookie-session');
+const cookieEncryptionKey = 'superCookieSecretKey';
 
+app.use(cookieSession({
+    name: 'cookie-session-name',
+    keys: [cookieEncryptionKey]
+}))
+
+// register regenerate & save after the cookieSession middleware initialization
+app.use(function(request, response, next) {
+    if (request.session && !request.session.regenerate) {
+        request.session.regenerate = (cb) => {
+            cb()
+        }
+    }
+    if (request.session && !request.session.save) {
+        request.session.save = (cb) => {
+            cb()
+        }
+    }
+    next()
+})
 
 //패스포트를 이용하기위한 미들웨어 등록
 app.use(passport.initialize());
@@ -25,7 +46,7 @@ app.set('view engine', 'ejs');
 
 //몽고 커넥션
 mongoose.set('strictQuery', false);
-mongoose.connect(`dddd`)
+mongoose.connect(`mongodb+srv://gamars80:qwer@cluster0.aaa1s7u.mongodb.net/?retryWrites=true&w=majority`)
 .then(() => {
     console.log('mongodb connected');
     
@@ -33,6 +54,9 @@ mongoose.connect(`dddd`)
     console.log(err);
 })
 
+app.get('/', (req,res) => {
+    res.render('index');
+})
 
 app.get('/login', (req, res) => {
     res.render('login');
@@ -74,7 +98,7 @@ app.post('/login', (req, res, next) => {
             res.redirect('/')
         })
 
-    })
+    })(req, res, next) // 미들웨어 안에 또 passport미들웨어가 있기에 req,res,next를 passport 미들웨어가 사용할수 있도록
 })
 const port = 8080;
 app.listen(port, (req, res) => {
