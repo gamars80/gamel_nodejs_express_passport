@@ -46,7 +46,7 @@ app.set('view engine', 'ejs');
 
 //몽고 커넥션
 mongoose.set('strictQuery', false);
-mongoose.connect(`mongodb+srv://gamars80:qwer@cluster0.aaa1s7u.mongodb.net/?retryWrites=true&w=majority`)
+mongoose.connect(`dddd`)
 .then(() => {
     console.log('mongodb connected');
     
