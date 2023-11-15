@@ -28,10 +28,8 @@ passport.use('local', new LocalStrategy({usernameField:'email', passwordField: '
             if(!user) {
                 return done(null, false, {msg:`Email ${email} not found`});
             }
-            console.log('222222222222');
-
+          
             user.comparePassword(password, (err, isMatch) => {
-                console.log('errr'+ err);
                 if (err) return done(err);
 
                 if (isMatch) {
@@ -40,7 +38,6 @@ passport.use('local', new LocalStrategy({usernameField:'email', passwordField: '
 
                 return done(null, false, { msg: 'Invalid email or password.' })
             })
-
         })
     }
 ));

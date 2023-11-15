@@ -5,6 +5,7 @@ const path = require('path');
 const User = require('./models/users.model');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
+const { checkAuthenticated, checkNotAuthenticated } = require('./middlewares/auth');
 const cookieEncryptionKey = 'superCookieSecretKey';
 
 app.use(cookieSession({
@@ -46,7 +47,7 @@ app.set('view engine', 'ejs');
 
 //몽고 커넥션
 mongoose.set('strictQuery', false);
-mongoose.connect(`dddd`)
+mongoose.connect(`mongodb+srv://gamars80:ddsdsds@cluster0.aaa1s7u.mongodb.net/?retryWrites=true&w=majority`)
 .then(() => {
     console.log('mongodb connected');
     
@@ -54,15 +55,15 @@ mongoose.connect(`dddd`)
     console.log(err);
 })
 
-app.get('/', (req,res) => {
+app.get('/', checkAuthenticated, (req,res) => {
     res.render('index');
 })
 
-app.get('/login', (req, res) => {
+app.get('/login', checkNotAuthenticated, (req, res) => {
     res.render('login');
 })
 
-app.get('/signup', (req, res) => {
+app.get('/signup', checkNotAuthenticated, (req, res) => {
     res.render('signup');
 })
 
