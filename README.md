@@ -5,5 +5,7 @@
   회원가입시 mongodb에 save
 
   passport의 serializeUser , deserializeUser 구현하여 cookie-session을 이용한 로그인 비즈니스 로직
+
+  페이지 접근시 인증여부를 검증하는 미들웨어 auth.js 추가
     
   
