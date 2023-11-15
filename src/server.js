@@ -47,7 +47,7 @@ app.set('view engine', 'ejs');
 
 //몽고 커넥션
 mongoose.set('strictQuery', false);
-mongoose.connect(`mongodb+srv://gamars80:ddsdsds@cluster0.aaa1s7u.mongodb.net/?retryWrites=true&w=majority`)
+mongoose.connect(`mongodb+srv://gamars80:qwer@cluster0.aaa1s7u.mongodb.net/?retryWrites=true&w=majority`)
 .then(() => {
     console.log('mongodb connected');
     
@@ -61,6 +61,15 @@ app.get('/', checkAuthenticated, (req,res) => {
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
     res.render('login');
+})
+
+app.post('/logout', (req, res, next) => {
+    //passport에서 제공하는 req.logOut 이용
+    req.logOut(function(err) {
+        if(err) return next(err);
+    })
+
+    res.redirect('/login');
 })
 
 app.get('/signup', checkNotAuthenticated, (req, res) => {
