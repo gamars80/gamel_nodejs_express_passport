@@ -45,8 +45,8 @@ const localStrategyConfig = new LocalStrategy({usernameField:'email', passwordFi
 
 passport.use('local',localStrategyConfig);
 
-const googleClientId = '409562904408-5fs0vd764k2sn0dtcq0bnn09f477aqm8.apps.googleusercontent.com';
-const googleClientSecret = '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';
+const googleClientId = '';
+const googleClientSecret = 'G';
 const googleStrategyConfig = new GoogleStrategy({
     clientID: googleClientId,
     clientSecret: googleClientSecret,
