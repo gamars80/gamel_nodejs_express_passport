@@ -47,7 +47,7 @@ app.set('view engine', 'ejs');
 
 //몽고 커넥션
 mongoose.set('strictQuery', false);
-mongoose.connect(`mongodb+srv://@cluster0.aaa1s7u.mongodb.net/?retryWrites=true&w=majority`)
+mongoose.connect(`mongodb+srv://gamars80:qwer@cluster0.aaa1s7u.mongodb.net/?retryWrites=true&w=majority`)
 .then(() => {
     console.log('mongodb connected');
     
@@ -114,6 +114,12 @@ app.post('/login', (req, res, next) => {
 
 //passport의 authenticate google 전략 사용
 app.get('/auth/google', passport.authenticate('google'));
+
+//구글에서 로그인 성공시 처리하는 콜백 url 에 대한 처리
+app.get('/auth/google/callback', passport.authenticate('google',{
+    successReturnToOrRedirect: '/',
+    failueRedirect: '/login'
+}));
 
 const port = 8080;
 app.listen(port, (req, res) => {
