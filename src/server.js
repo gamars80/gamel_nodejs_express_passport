@@ -47,7 +47,7 @@ app.set('view engine', 'ejs');
 
 //몽고 커넥션
 mongoose.set('strictQuery', false);
-mongoose.connect(`mongodb+srv://gamars80:qwer@cluster0.aaa1s7u.mongodb.net/?retryWrites=true&w=majority`)
+mongoose.connect(`mongodb+srv://@cluster0.aaa1s7u.mongodb.net/?retryWrites=true&w=majority`)
 .then(() => {
     console.log('mongodb connected');
     
@@ -92,6 +92,7 @@ app.post('/signup', async (req, res) => {
 })
 
 app.post('/login', (req, res, next) => {
+    //passport에서 제공하는 authenticate 전략중 이메일,비밀번호 형식인 local 전략
     passport.authenticate("local", (err, user , info) => {
         //에러가 있으면 express 에러처리기로 next
         if(err) next(err); 
@@ -110,6 +111,10 @@ app.post('/login', (req, res, next) => {
 
     })(req, res, next) // 미들웨어 안에 또 passport미들웨어가 있기에 req,res,next를 passport 미들웨어가 사용할수 있도록
 })
+
+//passport의 authenticate google 전략 사용
+app.get('/auth/google', passport.authenticate('google'));
+
 const port = 8080;
 app.listen(port, (req, res) => {
     console.log(`Listening On ${port}`);
