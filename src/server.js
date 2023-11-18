@@ -6,11 +6,15 @@ const User = require('./models/users.model');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
 const { checkAuthenticated, checkNotAuthenticated } = require('./middlewares/auth');
-const cookieEncryptionKey = 'superCookieSecretKey';
+const config = require('config');
+const serverConfig = config.get('server');
+
+require('dotenv').config();
+
 
 app.use(cookieSession({
     name: 'cookie-session-name',
-    keys: [cookieEncryptionKey]
+    keys: [process.env.COOKIE_ENCRYPTION_KEY]
 }))
 
 // register regenerate & save after the cookieSession middleware initialization
@@ -47,7 +51,7 @@ app.set('view engine', 'ejs');
 
 //몽고 커넥션
 mongoose.set('strictQuery', false);
-mongoose.connect(`mongodb+srv://gamars80:qwer@cluster0.aaa1s7u.mongodb.net/?retryWrites=true&w=majority`)
+mongoose.connect(process.env.MONGO_URI)
 .then(() => {
     console.log('mongodb connected');
     
@@ -121,7 +125,8 @@ app.get('/auth/google/callback', passport.authenticate('google',{
     failueRedirect: '/login'
 }));
 
-const port = 8080;
+const port = serverConfig.get('port');
+console.log(port)
 app.listen(port, (req, res) => {
     console.log(`Listening On ${port}`);
 })
