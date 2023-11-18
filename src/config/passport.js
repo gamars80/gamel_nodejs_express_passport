@@ -43,14 +43,14 @@ const localStrategyConfig = new LocalStrategy({usernameField:'email', passwordFi
     }
 );
 
+require('dotenv').config();
+
 passport.use('local',localStrategyConfig);
 
-const googleClientId = process.env.GOOGLE_CLIENT_ID;
-const googleClientSecret = process.env.GOOGLE_CLIENT_SECREAT;
 
 const googleStrategyConfig = new GoogleStrategy({
-    clientID: googleClientId,
-    clientSecret: googleClientSecret,
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLINET_SECREAT,
     callbackURL: '/auth/google/callback',
     scope: ['email', 'profile']
 }, (accessToken, refreshToken, profile, done) => {

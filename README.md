@@ -13,5 +13,8 @@
   dotenv 모듈 설치하여 default/dev/pord 환경 분리
 
   중요한 설정 값들 환경변수로 빼서 사용 proceess.env.환경변수
+
+# 리팩토링
+  Router 통한 소스 리팩토링
     
   
