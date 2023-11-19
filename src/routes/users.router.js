@@ -61,5 +61,11 @@ usersRouter.get('/google/callback', passort.authenticate('google',{
 }));
 
 
-module.exports = usersRouter;
+usersRouter.get('/kakao', passort.authenticate('kakao'));
 
+usersRouter.get('/kakao/callback', passort.authenticate('kakao', {
+    successReturnToOrRedirect: '/',
+    failureRedirect: '/login'
+}));
+
+module.exports = usersRouter;

@@ -19,5 +19,8 @@
 
 # 회원가입시 웰컴 메일 보내기
   nodemailer 를 통한 메일 전송
+
+# 카카오 로그인 연동하기
+  passport kakako-oauth 통한 카카오 로그인 연동하기
     
   
