@@ -1,11 +1,12 @@
 const express = require('express');
 const passort = require('passport');
 const User = require('../models/users.model');
+const sendMail = require('../mail/mail');
 const usersRouter = express.Router();
 
 usersRouter.post('/login', (req, res, next) => {
     //passport에서 제공하는 authenticate 전략중 이메일,비밀번호 형식인 local 전략
-    passport.authenticate("local", (err, user , info) => {
+    passort.authenticate("local", (err, user , info) => {
         //에러가 있으면 express 에러처리기로 next
         if(err) next(err); 
 
@@ -32,6 +33,9 @@ usersRouter.post('/signup', async (req, res) => {
     try{
         // 몽고 db user 컬렉션에 user를 저장한다
         await user.save();
+
+        //가입인사 이메일 보내기
+        sendMail('gamars803@gmail.com', '엉남이', 'welcome');
         res.redirect('/login');
     } catch(error) {
         console.error(error);
@@ -51,7 +55,7 @@ usersRouter.post('/logout', (req, res, next) => {
 usersRouter.get('/google', passort.authenticate('google'));
 
 //구글에서 로그인 성공시 처리하는 콜백 url 에 대한 처리
-usersRouter.get(' /google/callback', passort.authenticate('google',{
+usersRouter.get('/google/callback', passort.authenticate('google',{
     successReturnToOrRedirect: '/',
     failueRedirect: '/login'
 }));
