@@ -6,7 +6,8 @@ const cookieSession = require('cookie-session');
 const config = require('config');
 const mainRouter = require('./routes/main.router');
 const usersRouter = require('./routes/users.router');
-const passport = require('passport');
+const passport = require('passport'); 
+const productsRouter = require('./routes/products.router');
 const serverConfig = config.get('server');
 
 require('dotenv').config();
@@ -60,6 +61,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.use('/', mainRouter);
 app.use('/auth', usersRouter);
+app.use('/products', productsRouter);
 
 
 

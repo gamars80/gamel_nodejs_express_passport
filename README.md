@@ -22,5 +22,8 @@
 
 # 카카오 로그인 연동하기
   passport kakako-oauth 통한 카카오 로그인 연동하기
+
+# product 모델 부터 CRUD
+  mongoose를 이용한 모델 스키마 생성, 모델 생성, CRUD 구현
     
   
